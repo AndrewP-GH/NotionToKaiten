@@ -11,7 +11,7 @@ module KaitenApi =
         $"%s{baseUrl}/spaces/%s{spaceId}/boards"
 
     let cardsList columnId offset =
-        $"%s{baseUrl}/cards?column_id={columnId}&limit=100&offset={offset}"
+        $"%s{baseUrl}/cards?column_id={columnId}&limit=100&offset={offset}&archived=false"
 
     let updateCard cardId = $"%s{baseUrl}/cards/%s{cardId}"
 
