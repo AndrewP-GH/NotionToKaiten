@@ -13,6 +13,7 @@
 
     <ItemGroup>
         <PackageReference Include="Fastenshtein" Version="1.0.10"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="8.0.0" />
         <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0"/>
     </ItemGroup>
 

@@ -130,22 +130,27 @@ let fillCards cardFiles space =
                 printfn $"> Finished processing {totalProcessed} cards for column \"{column.title}\""
     }
 
-type _marker() =
+type private _marker() =
     class
     end
 
-let config =
-    ConfigurationBuilder()
-        .AddUserSecrets<_marker>()
-        .Build()
+[<EntryPoint>]
+let main args =
+    let config =
+        ConfigurationBuilder()
+            .AddUserSecrets<_marker>()
+            .AddCommandLine(args)
+            .Build()
 
-let apiKey = config["apikey"]
-let space = config["space"]
-let sourceDirectory = config["sourceDirectory"]
+    let apiKey = config["apikey"]
+    let space = config["space"]
+    let sourceDirectory = config["sourceDirectory"]
 
-let cardFiles = Directory.GetFiles(sourceDirectory, "*.md")
-setAuthorizationHeader apiKey
+    let cardFiles = Directory.GetFiles(sourceDirectory, "*.md")
+    setAuthorizationHeader apiKey
 
-fillCards cardFiles space
-|> Async.AwaitTask
-|> Async.RunSynchronously
+    fillCards cardFiles space
+    |> Async.AwaitTask
+    |> Async.RunSynchronously
+
+    0
