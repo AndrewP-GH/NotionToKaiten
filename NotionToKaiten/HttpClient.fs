@@ -42,9 +42,10 @@ let retryWithBackoff (operation: unit -> Task<'T>) =
             | :? HttpRequestException ->
                 if attempt < maxAttempts then
                     let delay = Math.Pow(2.0, float attempt) |> int
-                    printfn $"Rate limit reached. Retrying in {delay} seconds. Attempt: {attempt + 1}/{maxAttempts}"
+                    let inc = attempt + 1
+                    printfn $"Rate limit reached. Retrying in {delay} seconds. Attempt: {inc}/{maxAttempts}"
                     do! Task.Delay(delay * 1000)
-                    return! retry (attempt + 1)
+                    return! retry inc
                 else
                     return raise (Exception("Max retries reached"))
         }
